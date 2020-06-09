@@ -5,27 +5,39 @@
 </template>
 
 <script>
+import Camera from "@/assets/js/Camera";
 import RenderingController from "../assets/js/RenderingController";
 
 export default {
   name: "Renderer",
-  props: {
-    width: {},
-    height: {}
-  },
   mounted() {
-    this.controller = new RenderingController(this.$refs.canvas);
+    this.camera = new Camera();
 
-    this.controller.start();
+    this.camera.createCameraStream().then(e => {
+      this.videoElement = this.camera.createHiddenVideo(window.innerWidth, window.innerHeight);
+      this.resized();
 
-    console.log(`${this.publicPath}`);
+      this.$el.appendChild(this.videoElement);
+
+      this.controller = new RenderingController(this.$refs.canvas, this.camera);
+      this.controller.start();
+
+      window.addEventListener("resize", this.resized.bind(this));
+    });
+
+
   },
-  computed: {
-    styles() {
-      return {
-        "--width": this.width,
-        "--height": this.height
-      };
+  methods: {
+    resized() {
+      if (window.innerWidth > window.innerHeight * this.camera.camera_aspect_ratio) {
+        this.videoElement.width = window.innerHeight * this.camera.camera_aspect_ratio;
+        this.videoElement.height = window.innerHeight;
+      } else {
+        this.videoElement.width = window.innerWidth;
+        this.videoElement.height = window.innerWidth / this.camera.camera_aspect_ratio;
+      }
+      this.$refs.canvas.width = this.videoElement.width;
+      this.$refs.canvas.height = this.videoElement.height;
     }
   }
 };
@@ -33,10 +45,6 @@ export default {
 
 <style scoped lang="scss">
 #main-canvas {
-  --width: 100vw;
-  --height: 100vh;
-
-  width: var(--width);
-  height: var(--height);
+  position: fixed;
 }
 </style>

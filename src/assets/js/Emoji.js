@@ -1,20 +1,19 @@
-import RenderingObject from './RenderingObject';
-import RenderingController from './RenderingController';
+import RenderingObject from "./RenderingObject";
+import RenderingController from "./RenderingController";
 
 export default class Emoji extends RenderingObject {
   constructor(controller = new RenderingController()) {
     super();
     this.ctl = controller;
-    this.target = '😎';
+    this.target = "😎";
 
     this.position = [this.ctl.width * 0.5, this.ctl.height * 0.5];
-    this.font_size = 100;
-    console.log(this.ctl.width);
+    this.font_size = 500;
 
     this.emoji_lookup = {
-      happy: '😄',
-      sad: '😢',
-      angry: '😡',
+      happy: "😄",
+      sad: "😢",
+      angry: "😡"
     };
   }
 
@@ -34,6 +33,10 @@ export default class Emoji extends RenderingObject {
     super.draw();
     this.ctl.ctx.font = `${this.font_size}px serif`;
 
-    this.ctl.ctx.fillText(this.target, this.position[0] - this.font_size * 0.5, this.position[1] + this.font_size * 0.5);
+    this.ctl.ctx.fillText(
+      this.target,
+      this.position[0] - this.font_size * 0.5,
+      this.position[1] + this.font_size * 0.5
+    );
   }
 }

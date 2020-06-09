@@ -1,0 +1,5 @@
+{
+  "printWidth": 120,
+  "number-leading-zero": "never",
+  "no-unused-vars": "never"
+}
