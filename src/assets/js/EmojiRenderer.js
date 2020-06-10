@@ -1,7 +1,7 @@
 import RenderingObject from "./RenderingObject";
 import RenderingController from "./RenderingController";
 
-export default class Emoji extends RenderingObject {
+export default class EmojiRenderer extends RenderingObject {
   constructor(controller = new RenderingController()) {
     super();
     this.ctl = controller;

@@ -1,5 +1,5 @@
 import Camera from "./Camera";
-import Emoji from "./Emoji";
+import EmojiRenderer from "./EmojiRenderer";
 import FaceDetector from "./FaceDetector";
 import * as faceapi from "face-api.js";
 
@@ -13,7 +13,7 @@ export default class RenderingController {
 
     this.camera = camera;
 
-    this.emoji = new Emoji(this);
+    this.emoji_renderer = new EmojiRenderer(this);
 
     this.face_detector = new FaceDetector(this.camera);
     this.face_detector.load().then(() => {}, console.error);
@@ -35,9 +35,9 @@ export default class RenderingController {
 
     if (this.face_detector.ready) {
       this.face_detector.update().then(() => {
-        this.emoji.setPosition(this.face_detector.position[0], this.face_detector.position[1]);
+        this.emoji_renderer.setPosition(this.face_detector.position[0], this.face_detector.position[1]);
 
-        this.emoji.font_size = this.face_detector.height * 1.1;
+        this.emoji_renderer.font_size = this.face_detector.height * 1.1;
       });
     }
 
@@ -45,7 +45,7 @@ export default class RenderingController {
     //   faceapi.draw.drawDetections(this.canvas, this.face_detector.detections);
     // }
 
-    this.emoji.draw();
+    this.emoji_renderer.draw();
 
     if (this.render_status) requestAnimationFrame(this.draw.bind(this));
   }
