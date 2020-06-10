@@ -1,7 +1,7 @@
 import * as faceapi from "face-api.js";
 import Camera from "./Camera";
 
-const MODEL_URL = `http://${location.host}/models/`;
+const MODEL_URL = `./models`;
 
 const LANDMARKS_NUM = 68;
 
