@@ -12,7 +12,7 @@ export default class FaceDetector {
     this.ready = false;
     this.updated = false;
 
-    this.detections = {};
+    this.result = {};
     this.position = [0, 0];
     this.height = 0;
   }
@@ -36,17 +36,20 @@ export default class FaceDetector {
   async update() {
     if (!this.ready) throw new Error("model is not loaded.");
 
-    let detections = await faceapi
-      .detectAllFaces(this.camera.getVideoElement(), new faceapi.TinyFaceDetectorOptions())
-      .withFaceLandmarks();
+    let result = await faceapi
+      .detectSingleFace(this.camera.getVideoElement(), new faceapi.TinyFaceDetectorOptions())
+      .withFaceLandmarks()
+      .withFaceExpressions();
 
     try {
-      this.detections = faceapi.resizeResults(detections, {
+      this.result = faceapi.resizeResults(result, {
         width: this.camera.getVideoElement().width,
         height: this.camera.getVideoElement().height
       });
 
-      const box = this.detections[0].detection.box;
+      const box = this.result.detection.box;
+
+      this.expressions = result.expressions;
 
       this.position = [box.x + box.width * 0.5, box.y + box.height * 0.2];
       this.height = this.height * 0.7 + box.height * 0.3;
