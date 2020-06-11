@@ -1,6 +1,7 @@
 import Camera from "./Camera";
 import EmojiRenderer from "./EmojiRenderer";
 import FaceDetector from "./FaceDetector";
+import EmotionController from "@/assets/js/EmotionController";
 import * as faceapi from "face-api.js";
 
 export default class RenderingController {
@@ -17,6 +18,8 @@ export default class RenderingController {
 
     this.face_detector = new FaceDetector(this.camera);
     this.face_detector.load().then(() => {}, console.error);
+
+    this.emotion_controller = new EmotionController(this.face_detector, this.emoji_renderer);
 
     window.addEventListener("resize", this.resized.bind(this));
   }
@@ -37,7 +40,9 @@ export default class RenderingController {
       this.face_detector.update().then(() => {
         this.emoji_renderer.setPosition(this.face_detector.position[0], this.face_detector.position[1]);
 
-        this.emoji_renderer.font_size = this.face_detector.height * 1.1;
+        this.emoji_renderer.font_size = this.face_detector.height * 1.4;
+
+        this.emotion_controller.update();
       });
     }
 

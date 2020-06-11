@@ -11,9 +11,13 @@ export default class EmojiRenderer extends RenderingObject {
     this.font_size = 500;
 
     this.emoji_lookup = {
-      happy: "😄",
-      sad: "😢",
-      angry: "😡"
+      angry: "😡",
+      disgusted: "🤢",
+      fearful: "😰",
+      happy: "🤩",
+      neutral: "🙂",
+      sad: "🥺",
+      surprised: "😳"
     };
   }
 

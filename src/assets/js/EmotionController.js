@@ -1,13 +1,16 @@
+import FaceDetector from "@/assets/js/FaceDetector";
+import EmojiRenderer from "@/assets/js/EmojiRenderer";
+
 export default class EmotionController {
-  constructor() {
-    this._current_emotion = '';
+  constructor(face_detector = new FaceDetector(), emoji_renderer = new EmojiRenderer()) {
+    this.face_detector = face_detector;
+    this.emoji_renderer = emoji_renderer;
+    this._current_emotion = "neutral";
 
-    this.EMOTION_LIST = ['happy', 'angry', 'sad'];
+    this.EMOTION_LIST = ["angry", "disgusted", "fearful", "happy", "neutral", "sad", "surprised"];
   }
 
-  setParams() {
-
-  }
+  setParams() {}
 
   get current_emotion() {
     return this._current_emotion;
@@ -19,5 +22,12 @@ export default class EmotionController {
       return;
     }
     this._current_emotion = emotion;
+  }
+  update() {
+    let expression = Object.keys(this.face_detector.expressions).reduce((a, c, arr) => {
+      return this.face_detector.expressions[a] > this.face_detector.expressions[c] ? a : c;
+    });
+
+    this.emoji_renderer.setEmotion(expression);
   }
 }
