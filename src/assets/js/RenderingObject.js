@@ -4,4 +4,3 @@ export default class RenderingObject {
     // console.log('test');
   }
 }
-

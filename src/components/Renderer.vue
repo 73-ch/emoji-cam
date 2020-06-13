@@ -23,9 +23,12 @@ export default {
       this.controller.start();
 
       window.addEventListener("resize", this.resized.bind(this));
+
+      this.$root.$on("controller_update", e => {
+        this.videoElement.style.visibility = e.showvideo ? "visible" : "hidden";
+        this.$refs.canvas.style.visibility = e.showcanvas ? "visible" : "hidden";
+      });
     });
-
-
   },
   methods: {
     resized() {
