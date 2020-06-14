@@ -7,7 +7,7 @@ export default class EmojiRenderer extends RenderingObject {
     this.ctl = controller;
     this.target = "😎";
 
-    this.position = [this.ctl.width * 0.5, this.ctl.height * 0.5];
+    this.positions = [];
     this.font_size = 500;
 
     this.emoji_lookup = {
@@ -29,18 +29,21 @@ export default class EmojiRenderer extends RenderingObject {
     }
   }
 
+  // 互換性のために追加
   setPosition(x, y) {
-    this.position = [x, y];
+    this.positions = [[x, y]];
+  }
+
+  setPositions(positions) {
+    this.positions = positions;
   }
 
   draw() {
     super.draw();
     this.ctl.ctx.font = `${this.font_size}px serif`;
 
-    this.ctl.ctx.fillText(
-      this.target,
-      this.position[0] - this.font_size * 0.5,
-      this.position[1] + this.font_size * 0.5
-    );
+    for (let p of this.positions) {
+      this.ctl.ctx.fillText(this.target, p[0] - this.font_size * 0.5, p[1] + this.font_size * 0.5);
+    }
   }
 }
