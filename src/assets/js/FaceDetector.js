@@ -8,13 +8,13 @@ const LANDMARKS_NUM = 68;
 export default class FaceDetector {
   constructor(camera = new Camera()) {
     this.camera = camera;
-    this.landmarks = new Array(LANDMARKS_NUM);
     this.ready = false;
     this.updated = false;
 
-    this.result = {};
-    this.position = [0, 0];
-    this.height = 0;
+    this.results = [];
+    this.positions = [];
+    this.heights = [];
+    this.expressions = [];
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -37,22 +37,30 @@ export default class FaceDetector {
     if (!this.ready) throw new Error("model is not loaded.");
 
     let result = await faceapi
-      .detectSingleFace(this.camera.getVideoElement(), new faceapi.TinyFaceDetectorOptions())
+      .detectAllFaces(this.camera.getVideoElement(), new faceapi.TinyFaceDetectorOptions())
       .withFaceLandmarks()
       .withFaceExpressions();
 
     try {
-      this.result = faceapi.resizeResults(result, {
-        width: this.camera.getVideoElement().width,
-        height: this.camera.getVideoElement().height
+      this.results = result.map(e => {
+        return faceapi.resizeResults(e, {
+          width: this.camera.getVideoElement().width,
+          height: this.camera.getVideoElement().height
+        });
       });
 
-      const box = this.result.detection.box;
+      this.positions = [];
 
-      this.expressions = result.expressions;
+      for (let r of this.results) {
+        const box = r.detection.box;
+        this.expressions.push(r.expressions);
+        this.positions.push([box.x + box.width * 0.5, box.y + box.height * 0.2]);
 
-      this.position = [box.x + box.width * 0.5, box.y + box.height * 0.2];
-      this.height = this.height * 0.7 + box.height * 0.3;
+        this.heights.push(box.height);
+      }
+
+      console.log(this);
+
       this.updated = true;
     } catch (e) {
       this.updated = false;

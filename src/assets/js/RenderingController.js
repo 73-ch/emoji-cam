@@ -46,8 +46,11 @@ export default class RenderingController {
       });
     }
 
+    // debug: draw landmarks
     // if (this.face_detector.updated) {
-    //   faceapi.draw.drawDetections(this.canvas, this.face_detector.detections);
+    //   for (let r of this.face_detector.results)  {
+    //     faceapi.draw.drawDetections(this.canvas, r);
+    //   }
     // }
 
     this.emoji_renderer.draw();
