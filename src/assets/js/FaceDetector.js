@@ -59,8 +59,6 @@ export default class FaceDetector {
         this.heights.push(box.height);
       }
 
-      console.log(this);
-
       this.updated = true;
     } catch (e) {
       this.updated = false;
