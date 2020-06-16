@@ -15,6 +15,7 @@ export default {
 
     this.camera.createCameraStream().then(id => {
       this.videoElement = this.camera.createHiddenVideo(window.innerWidth, window.innerHeight);
+
       this.resized();
 
       this.$el.appendChild(this.videoElement);
@@ -22,9 +23,9 @@ export default {
       this.controller = new RenderingController(this.$refs.canvas, this.camera);
       this.controller.start();
 
-      window.addEventListener("resize", this.resized.bind(this));
-
       this.$root.$emit("stream_created", id);
+
+      window.addEventListener("resize", this.resized.bind(this));
     });
 
     this.$root.$on("controller_update", (e, s) => {
@@ -57,6 +58,6 @@ export default {
 
 <style scoped lang="scss">
 #main-canvas {
-  position: fixed;
+  position: absolute;
 }
 </style>
