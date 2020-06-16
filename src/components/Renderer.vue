@@ -34,6 +34,8 @@ export default {
         this.$refs.canvas.style.visibility = s.showcanvas ? "visible" : "hidden";
       } else if (e.target.id === "device-select") {
         this.camera.setDeviceId(s.camera_device_id);
+      } else if (e.target.id === "emoji-size") {
+        this.controller.emoji_renderer.size_adjust = s.emoji_size;
       }
     });
   },

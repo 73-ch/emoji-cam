@@ -11,6 +11,8 @@ export default class EmojiRenderer extends RenderingObject {
 
     this.squares = []; // square: {height: font_size, position:[x,y]}
 
+    this.size_adjust = 1.0;
+
     this.emoji_lookup = {
       angry: "😡",
       disgusted: "🤢",
@@ -39,11 +41,12 @@ export default class EmojiRenderer extends RenderingObject {
     super.draw();
 
     this.squares.forEach((s, i) => {
-      this.ctl.ctx.font = `${s.height}px serif`;
+      const scaled_height = s.height * this.size_adjust;
+      this.ctl.ctx.font = `${scaled_height}px serif`;
       this.ctl.ctx.fillText(
         this.emoji_lookup[this._emotions[i]],
-        s.position[0] - s.height * 0.5,
-        s.position[1] + s.height * 0.5
+        s.position[0] - scaled_height * 0.5,
+        s.position[1] + scaled_height * 0.5
       );
     });
   }

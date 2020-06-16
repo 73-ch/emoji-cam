@@ -2,7 +2,9 @@
   <div>
     video: <input id="video-checkbox" type="checkbox" v-model="struct.showvideo" @change="update" /> canvas:
     <input id="canvas-checkbox" type="checkbox" v-model="struct.showcanvas" @change="update" /> camera device:
-    <select id="device-select" v-model="struct.camera_device_id" @change="update" ref="device_select"></select>
+    <select id="device-select" v-model="struct.camera_device_id" @change="update" ref="device_select"></select
+    >emoji size:
+    <input id="emoji-size" type="range" min="0.1" max="3.0" step="0.1" v-model="struct.emoji_size" @input="update" />
   </div>
 </template>
 
@@ -14,7 +16,8 @@ export default {
       struct: {
         showvideo: true,
         showcanvas: true,
-        camera_device_id: ""
+        camera_device_id: "",
+        emoji_size: "1.0"
       }
     };
   },
