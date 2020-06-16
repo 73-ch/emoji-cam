@@ -7,6 +7,8 @@ export default class EmotionController {
     this.emoji_renderer = emoji_renderer;
     this._current_emotion = "neutral";
 
+    this.manual_mode = false;
+
     this.EMOTION_LIST = ["angry", "disgusted", "fearful", "happy", "neutral", "sad", "surprised"];
   }
 
@@ -24,10 +26,15 @@ export default class EmotionController {
     this._current_emotion = emotion;
   }
   update() {
-    let expression = Object.keys(this.face_detector.expressions).reduce((a, c, arr) => {
-      return this.face_detector.expressions[a] > this.face_detector.expressions[c] ? a : c;
-    });
+    const expressions = [];
+    for (let e of this.face_detector.expressions) {
+      expressions.push(
+        Object.keys(e).reduce((a, c, arr) => {
+          return e[a] > e[c] ? a : c;
+        })
+      );
+    }
 
-    this.emoji_renderer.setEmotion(expression);
+    this.emoji_renderer.emotions = expressions;
   }
 }

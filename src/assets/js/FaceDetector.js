@@ -12,8 +12,7 @@ export default class FaceDetector {
     this.updated = false;
 
     this.results = [];
-    this.positions = [];
-    this.heights = [];
+    this.squares = [];
     this.expressions = [];
   }
 
@@ -49,14 +48,16 @@ export default class FaceDetector {
         });
       });
 
-      this.positions = [];
+      this.squares = [];
+      this.expressions = [];
 
       for (let r of this.results) {
         const box = r.detection.box;
         this.expressions.push(r.expressions);
-        this.positions.push([box.x + box.width * 0.5, box.y + box.height * 0.2]);
-
-        this.heights.push(box.height);
+        this.squares.push({
+          position: [box.x + box.width * 0.5, box.y + box.height * 0.2],
+          height: box.height
+        });
       }
 
       this.updated = true;

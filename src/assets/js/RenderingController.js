@@ -38,9 +38,7 @@ export default class RenderingController {
 
     if (this.face_detector.ready) {
       this.face_detector.update().then(() => {
-        this.emoji_renderer.setPosition(this.face_detector.position[0], this.face_detector.position[1]);
-
-        this.emoji_renderer.font_size = this.face_detector.height * 1.4;
+        this.emoji_renderer.setSquares(this.face_detector.squares);
 
         this.emotion_controller.update();
       });

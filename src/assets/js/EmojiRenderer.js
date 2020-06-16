@@ -5,7 +5,9 @@ export default class EmojiRenderer extends RenderingObject {
   constructor(controller = new RenderingController()) {
     super();
     this.ctl = controller;
-    this.target = "😎";
+    this.targets = "😎";
+
+    this._emotions = [];
 
     this.squares = []; // square: {height: font_size, position:[x,y]}
 
@@ -20,29 +22,25 @@ export default class EmojiRenderer extends RenderingObject {
     };
   }
 
-  setEmotion(emotion) {
-    if (emotion in this.emoji_lookup) {
-      this.target = this.emoji_lookup[emotion];
-    } else {
-      console.error(`given ${emotion} is not defined`);
-    }
+  set emotions(emotions) {
+    this._emotions = emotions;
   }
 
   // 互換性のために追加
   setSquare(square) {
-    this.positions = [[square]];
+    this.squares = [[square]];
   }
 
   setSquares(squares) {
-    this.positions = this.squares;
+    this.squares = squares;
   }
 
   draw() {
     super.draw();
 
-    for (let r of this.squares) {
-      this.ctl.ctx.font = `${r.height}px serif`;
-      this.ctl.ctx.fillText(this.target, r.position[0] - r.height * 0.5, r.positions[1] + r.height * 0.5);
-    }
+    this.squares.forEach((s, i) => {
+      this.ctl.ctx.font = `${s.height}px serif`;
+      this.ctl.ctx.fillText(this.emoji_lookup[this._emotions[i]], s.position[0] - s.height * 0.5, s.position[1] + s.height * 0.5);
+    });
   }
 }
