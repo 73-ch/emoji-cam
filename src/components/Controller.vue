@@ -23,7 +23,6 @@ export default {
   },
   mounted() {
     this.initDeviceSelect();
-
     this.$root.$on("stream_created", id => {
       if (!this.$refs.device_select) return;
 
