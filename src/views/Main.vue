@@ -1,7 +1,7 @@
 <template>
   <div>
-    <renderer class="renderer"></renderer>
     <controller></controller>
+    <renderer class="renderer"></renderer>
   </div>
 </template>
 
