@@ -1,7 +1,7 @@
 <template>
   <div>
     video: <input id="video-checkbox" type="checkbox" v-model="struct.showvideo" @change="update" /> canvas:
-    <input id="canvas-checkbox" type="checkbox" v-model="struct.showcanvas" @change="update" /> camera_device:
+    <input id="canvas-checkbox" type="checkbox" v-model="struct.showcanvas" @change="update" /> camera device:
     <select id="device-select" v-model="struct.camera_device_id" @change="update" ref="device_select"></select>
   </div>
 </template>
@@ -20,6 +20,14 @@ export default {
   },
   mounted() {
     this.initDeviceSelect();
+
+    this.$root.$on("stream_created", id => {
+      if (!this.$refs.device_select) return;
+
+      for (let c of this.$refs.device_select.childNodes) {
+        if (c.value === id) this.struct.camera_device_id = id;
+      }
+    });
   },
   methods: {
     initDeviceSelect() {
@@ -40,7 +48,6 @@ export default {
       );
     },
     update(e) {
-      console.log(e);
       this.$root.$emit("controller_update", e, this.struct);
     }
   }

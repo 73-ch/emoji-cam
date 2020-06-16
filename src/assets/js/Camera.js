@@ -46,15 +46,14 @@ export default class Camera {
       console.error(e);
     });
 
-    console.log(this.stream.getVideoTracks());
-
     try {
-      this.camera_size = [
-        this.stream.getVideoTracks()[0].getSettings().width,
-        this.stream.getVideoTracks()[0].getSettings().height
-      ];
+      const track = this.stream.getVideoTracks()[0];
+
+      this.camera_size = [track.getSettings().width, track.getSettings().height];
 
       this.camera_aspect_ratio = this.camera_size[0] / this.camera_size[1];
+
+      return track.getCapabilities().deviceId;
     } catch (e) {
       console.error("video track is invalid");
     }

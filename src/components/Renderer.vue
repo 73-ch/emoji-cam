@@ -13,7 +13,7 @@ export default {
   mounted() {
     this.camera = new Camera();
 
-    this.camera.createCameraStream().then(() => {
+    this.camera.createCameraStream().then(id => {
       this.videoElement = this.camera.createHiddenVideo(window.innerWidth, window.innerHeight);
       this.resized();
 
@@ -23,6 +23,8 @@ export default {
       this.controller.start();
 
       window.addEventListener("resize", this.resized.bind(this));
+
+      this.$root.$emit("stream_created", id);
     });
 
     this.$root.$on("controller_update", (e, s) => {
@@ -31,7 +33,6 @@ export default {
       } else if (e.target.id === "canvas-checkbox") {
         this.$refs.canvas.style.visibility = s.showcanvas ? "visible" : "hidden";
       } else if (e.target.id === "device-select") {
-        console.log(s.camera_device_id);
         this.camera.setDeviceId(s.camera_device_id);
       }
     });
