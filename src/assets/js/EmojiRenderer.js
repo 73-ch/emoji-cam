@@ -40,7 +40,11 @@ export default class EmojiRenderer extends RenderingObject {
 
     this.squares.forEach((s, i) => {
       this.ctl.ctx.font = `${s.height}px serif`;
-      this.ctl.ctx.fillText(this.emoji_lookup[this._emotions[i]], s.position[0] - s.height * 0.5, s.position[1] + s.height * 0.5);
+      this.ctl.ctx.fillText(
+        this.emoji_lookup[this._emotions[i]],
+        s.position[0] - s.height * 0.5,
+        s.position[1] + s.height * 0.5
+      );
     });
   }
 }

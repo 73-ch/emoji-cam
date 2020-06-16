@@ -28,12 +28,25 @@ export default class Camera {
     return this.stream;
   }
 
+  async setDeviceId(device_id) {
+    this.constraints.video = {};
+    this.constraints.video.deviceId = device_id;
+    await this.createCameraStream();
+    this.setStreamToVideo();
+  }
+
   async createCameraStream() {
     if (!navigator.mediaDevices) throw new Error("mediaDevices not found");
+
+    if (this.stream) {
+      for (let t of this.stream.getTracks()) t.stop();
+    }
 
     this.stream = await navigator.mediaDevices.getUserMedia(this.constraints).catch(e => {
       console.error(e);
     });
+
+    console.log(this.stream.getVideoTracks());
 
     try {
       this.camera_size = [
@@ -49,6 +62,15 @@ export default class Camera {
 
   createHiddenVideo(width = this.camera_size[0], height = this.camera_size[1]) {
     this.video_element = document.createElement("video");
+    this.video_element.width = width;
+    this.video_element.height = height;
+    this.video_element.muted = true;
+    this.setStreamToVideo();
+
+    return this.video_element;
+  }
+
+  setStreamToVideo() {
     if (!this.stream) {
       this.createCameraStream().then(() => {
         this.video_element.srcObject = this.stream;
@@ -56,12 +78,6 @@ export default class Camera {
     } else {
       this.video_element.srcObject = this.stream;
     }
-
-    this.video_element.muted = true;
-    this.video_element.width = width;
-    this.video_element.height = height;
     this.video_element.play();
-
-    return this.video_element;
   }
 }
