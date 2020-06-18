@@ -51,6 +51,8 @@ export default {
       }
       this.$refs.canvas.width = this.videoElement.width;
       this.$refs.canvas.height = this.videoElement.height;
+
+      this.controller.resized();
     }
   }
 };
