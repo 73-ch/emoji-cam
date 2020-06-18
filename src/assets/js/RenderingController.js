@@ -17,11 +17,14 @@ export default class RenderingController {
     this.emoji_renderer = new EmojiRenderer(this);
 
     this.face_detector = new FaceDetector(this.camera);
-    this.face_detector.load().then(() => {}, console.error);
 
     this.emotion_controller = new EmotionController(this.face_detector, this.emoji_renderer);
 
     window.addEventListener("resize", this.resized.bind(this));
+  }
+
+  async load() {
+    return await this.face_detector.load().catch(console.error);
   }
 
   start() {

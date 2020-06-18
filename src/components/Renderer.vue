@@ -1,6 +1,6 @@
 <template>
   <div>
-    <canvas ref="canvas" id="main-canvas"></canvas>
+    <canvas ref="canvas" id="main-canvas" width="300" height="200"></canvas>
   </div>
 </template>
 
@@ -13,17 +13,18 @@ export default {
   mounted() {
     this.camera = new Camera();
 
-    this.camera.createCameraStream().then(id => {
+    this.controller = new RenderingController(this.$refs.canvas, this.camera);
+
+    Promise.all([this.camera.createCameraStream(), this.controller.load()]).then(values => {
       this.videoElement = this.camera.createHiddenVideo(window.innerWidth, window.innerHeight);
 
       this.resized();
 
       this.$el.appendChild(this.videoElement);
 
-      this.controller = new RenderingController(this.$refs.canvas, this.camera);
       this.controller.start();
 
-      this.$root.$emit("stream_created", id);
+      this.$root.$emit("stream_created", values[0]);
 
       window.addEventListener("resize", this.resized.bind(this));
     });
