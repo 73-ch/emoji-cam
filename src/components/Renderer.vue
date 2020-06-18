@@ -27,6 +27,8 @@ export default {
       this.$root.$emit("stream_created", values[0]);
 
       window.addEventListener("resize", this.resized.bind(this));
+
+      this.$emit("loaded");
     });
 
     this.$root.$on("controller_update", (e, s) => {
