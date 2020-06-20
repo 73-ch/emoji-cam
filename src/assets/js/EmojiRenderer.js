@@ -12,11 +12,12 @@ export default class EmojiRenderer extends RenderingObject {
     this.squares = []; // square: {height: font_size, position:[x,y]}
 
     this.size_adjust = 1.0;
+    this.ctl.ctx.font = `500px serif`;
 
     this.emoji_lookup = {
       angry: "😡",
-      disgusted: "🤢",
-      fearful: "😰",
+      disgusted: "😟",
+      fearful: "😨",
       happy: "🤩",
       neutral: "🙂",
       sad: "🥺",
@@ -42,12 +43,17 @@ export default class EmojiRenderer extends RenderingObject {
 
     this.squares.forEach((s, i) => {
       const scaled_height = s.height * this.size_adjust;
-      this.ctl.ctx.font = `${scaled_height}px serif`;
+      this.ctl.ctx.font = `${Math.floor(scaled_height)}px serif`;
       this.ctl.ctx.fillText(
         this.emoji_lookup[this._emotions[i]],
         s.position[0] - scaled_height * 0.5,
         s.position[1] + scaled_height * 0.5
       );
+
+      // this.ctl.ctx.translate(s.position[0] - scaled_height * 0.5, s.position[1] + scaled_height * 0.5);
+      // this.ctl.ctx.scale(scaled_height / 500, scaled_height / 500);
+      // this.ctl.ctx.fillText(this.emoji_lookup[this._emotions[i]], 0, 0);
+      // this.ctl.ctx.resetTransform();
     });
   }
 }
