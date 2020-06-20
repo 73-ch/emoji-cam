@@ -1,10 +1,21 @@
 <template>
-  <div>
-    video: <input id="video-checkbox" type="checkbox" v-model="struct.showvideo" @change="update" /> canvas:
-    <input id="canvas-checkbox" type="checkbox" v-model="struct.showcanvas" @change="update" /> camera device:
-    <select id="device-select" v-model="struct.camera_device_id" @change="update" ref="device_select"></select
-    >emoji size:
-    <input id="emoji-size" type="range" min="0.1" max="3.0" step="0.1" v-model="struct.emoji_size" @input="update" />
+  <div class="container">
+    <div>
+      <label for="video-checkbox">video: </label>
+      <input id="video-checkbox" type="checkbox" v-model="struct.showvideo" @change="update" />
+    </div>
+    <div>
+      <label for="canvas-checkbox">canvas:</label>
+      <input id="canvas-checkbox" type="checkbox" v-model="struct.showcanvas" @change="update" />
+    </div>
+    <div>
+      <label for="device-select">camera device:</label>
+      <select id="device-select" v-model="struct.camera_device_id" @change="update" ref="device_select"></select>
+    </div>
+    <div>
+      <label for="emoji-size">emoji size:</label>
+      <input id="emoji-size" type="range" min="0.1" max="3.0" step="0.1" v-model="struct.emoji_size" @input="update" />
+    </div>
   </div>
 </template>
 
@@ -56,4 +67,27 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+.container {
+  margin: 10px 15vw;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+
+  div {
+    margin: 0 5px;
+    display: inline-flex;
+    align-content: center;
+
+    label {
+      position: relative;
+      top: 1px;
+    }
+
+    select {
+      margin: 0 0 0 4px;
+    }
+  }
+}
+</style>
