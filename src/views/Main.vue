@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="main">
     <full-window-loading v-show="loading"></full-window-loading>
-    <controller v-show="!loading"></controller>
+    <controller v-show="!loading" @background-color-changed="setBackgroundColor"></controller>
     <renderer v-show="!loading" class="renderer" @loaded="loading = false"></renderer>
   </div>
 </template>
@@ -22,6 +22,11 @@ export default {
     return {
       loading: true
     };
+  },
+  methods: {
+    setBackgroundColor(color) {
+      this.$el.style.backgroundColor = color;
+    }
   }
 };
 </script>

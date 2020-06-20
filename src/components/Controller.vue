@@ -16,6 +16,10 @@
       <label for="emoji-size">emoji size:</label>
       <input id="emoji-size" type="range" min="0.1" max="3.0" step="0.1" v-model="struct.emoji_size" @input="update" />
     </div>
+    <div>
+      <label for="background-color">background color :</label>
+      <input id="background-color" type="color" v-model="struct.background_color" @input="backgroundColorChanged" />
+    </div>
   </div>
 </template>
 
@@ -28,7 +32,8 @@ export default {
         showvideo: true,
         showcanvas: true,
         camera_device_id: "",
-        emoji_size: "1.0"
+        emoji_size: "1.0",
+        background_color: "#ffffff"
       }
     };
   },
@@ -62,6 +67,9 @@ export default {
     },
     update(e) {
       this.$root.$emit("controller_update", e, this.struct);
+    },
+    backgroundColorChanged() {
+      this.$emit("background-color-changed", this.struct.background_color);
     }
   }
 };
@@ -69,7 +77,7 @@ export default {
 
 <style scoped lang="scss">
 .container {
-  margin: 10px 15vw;
+  padding: 10px 15vw;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -81,12 +89,12 @@ export default {
     align-content: center;
 
     label {
-      position: relative;
-      top: 1px;
+      margin: auto;
     }
 
-    select {
-      margin: 0 0 0 4px;
+    select,
+    input {
+      margin: auto 4px;
     }
   }
 }
