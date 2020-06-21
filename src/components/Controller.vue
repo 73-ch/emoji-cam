@@ -9,16 +9,24 @@
       <input id="canvas-checkbox" type="checkbox" v-model="struct.showcanvas" @change="update" />
     </div>
     <div>
+      <label for="background-checkbox">background image:</label>
+      <input id="background-checkbox" type="checkbox" v-model="struct.showbackground" @change="update" />
+    </div>
+    <div>
       <label for="device-select">camera device:</label>
       <select id="device-select" v-model="struct.camera_device_id" @change="update" ref="device_select"></select>
     </div>
     <div>
       <label for="emoji-size">emoji size:</label>
-      <input id="emoji-size" type="range" min="0.1" max="3.0" step="0.1" v-model="struct.emoji_size" @input="update" />
+      <input id="emoji-size" type="range" min="0.1" max="4.0" step="0.1" v-model="struct.emoji_size" @input="update" />
     </div>
     <div>
       <label for="background-color">background color :</label>
       <input id="background-color" type="color" v-model="struct.background_color" @input="backgroundColorChanged" />
+    </div>
+    <div>
+      <label for="background-img">background image: </label>
+      <input id="background-img" type="file" accept="image/png,image/gif,image/jpeg" @change="imgFileSelected" />
     </div>
   </div>
 </template>
@@ -31,6 +39,7 @@ export default {
       struct: {
         showvideo: true,
         showcanvas: true,
+        showbackground: false,
         camera_device_id: "",
         emoji_size: "1.0",
         background_color: "#ffffff"
@@ -45,6 +54,10 @@ export default {
       for (let c of this.$refs.device_select.childNodes) {
         if (c.value === id) this.struct.camera_device_id = id;
       }
+    });
+
+    this.$root.$on("background-img-loaded", t => {
+      this.$set(this.struct, "showbackground", t);
     });
   },
   methods: {
@@ -70,6 +83,11 @@ export default {
     },
     backgroundColorChanged() {
       this.$emit("background-color-changed", this.struct.background_color);
+    },
+    imgFileSelected(e) {
+      if (!e.target.files[0]) return;
+
+      this.$root.$emit("controller_update", e, e.target.files[0]);
     }
   }
 };

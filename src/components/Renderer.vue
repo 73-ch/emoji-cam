@@ -1,6 +1,7 @@
 <template>
-  <div>
+  <div class="container">
     <canvas ref="canvas" id="main-canvas" width="300" height="200"></canvas>
+    <img id="background-img" ref="background_img" v-show="background_enable" alt="background image" />
   </div>
 </template>
 
@@ -10,6 +11,12 @@ import RenderingController from "../assets/js/RenderingController";
 
 export default {
   name: "Renderer",
+  data() {
+    return {
+      background_enable: false,
+      background_aspect: 1.0
+    };
+  },
   mounted() {
     this.camera = new Camera();
 
@@ -40,6 +47,25 @@ export default {
         this.camera.setDeviceId(s.camera_device_id);
       } else if (e.target.id === "emoji-size") {
         this.controller.emoji_renderer.size_adjust = s.emoji_size;
+      } else if (e.target.id === "background-img") {
+        const file_reader = new FileReader();
+        file_reader.addEventListener("load", () => {
+          this.$refs.background_img.src = file_reader.result;
+          const img = new Image();
+          img.addEventListener("load", () => {
+            this.background_aspect = img.naturalWidth / img.naturalHeight;
+            this.background_enable = true;
+
+            this.resized();
+
+            this.$root.$emit("background-img-loaded", true);
+          });
+          img.src = file_reader.result;
+        });
+
+        file_reader.readAsDataURL(s);
+      } else if (e.target.id === "background-checkbox") {
+        this.background_enable = s.showbackground;
       }
     });
   },
@@ -52,6 +78,15 @@ export default {
         this.videoElement.width = window.innerWidth;
         this.videoElement.height = window.innerWidth / this.camera.camera_aspect_ratio;
       }
+
+      if (this.videoElement.width > this.background_aspect * this.videoElement.height) {
+        this.$refs.background_img.width = this.background_aspect * this.videoElement.height;
+        this.$refs.background_img.height = this.videoElement.height;
+      } else {
+        this.$refs.background_img.width = this.videoElement.width;
+        this.$refs.background_img.height = this.videoElement.width / this.background_aspect;
+      }
+
       this.$refs.canvas.width = this.videoElement.width;
       this.$refs.canvas.height = this.videoElement.height;
 
@@ -62,7 +97,18 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+#background-img {
+  position: absolute;
+  z-index: 2;
+}
+
 #main-canvas {
   position: absolute;
+  z-index: 3;
 }
 </style>
