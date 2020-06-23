@@ -35,4 +35,9 @@ export default {
 .renderer {
   width: 100vw;
 }
+
+.main {
+  min-width: 100vw;
+  min-height: 100vh;
+}
 </style>
