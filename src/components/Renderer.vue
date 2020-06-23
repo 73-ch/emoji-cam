@@ -68,6 +68,14 @@ export default {
         this.background_enable = s.showbackground;
       }
     });
+
+    window.addEventListener("beforeunload", () => {
+      const statics = this.controller.emoji_renderer.getStatics();
+
+      for (let e of Object.keys(statics)) {
+        this.$ga.event("Emotion", "rate", e, Math.floor(statics[e] * 100));
+      }
+    });
   },
   methods: {
     resized() {

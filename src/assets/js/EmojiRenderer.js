@@ -23,6 +23,25 @@ export default class EmojiRenderer extends RenderingObject {
       sad: "🥺",
       surprised: "😳"
     };
+
+    this.statics = {
+      angry: 0,
+      disgusted: 0,
+      fearful: 0,
+      happy: 0,
+      neutral: 0,
+      sad: 0,
+      surprised: 0
+    };
+  }
+
+  getStatics() {
+    const sum = Object.values(this.statics).reduce((a, s) => a + s);
+    Object.keys(this.statics).forEach(k => {
+      this.statics[k] /= sum;
+    });
+
+    return this.statics;
   }
 
   set emotions(emotions) {
@@ -41,6 +60,8 @@ export default class EmojiRenderer extends RenderingObject {
   draw() {
     super.draw();
 
+    const length = this.squares.length;
+
     this.squares.forEach((s, i) => {
       const scaled_height = s.height * this.size_adjust;
       this.ctl.ctx.font = `${Math.floor(scaled_height)}px serif`;
@@ -49,6 +70,8 @@ export default class EmojiRenderer extends RenderingObject {
         s.position[0] - scaled_height * 0.5,
         s.position[1] + scaled_height * 0.5
       );
+
+      this.statics[this._emotions[i]] += 1.0 / length;
 
       // this.ctl.ctx.translate(s.position[0] - scaled_height * 0.5, s.position[1] + scaled_height * 0.5);
       // this.ctl.ctx.scale(scaled_height / 500, scaled_height / 500);
