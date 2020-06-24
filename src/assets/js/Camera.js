@@ -9,13 +9,6 @@ export default class Camera {
 
     this.camera_size = [0, 0];
     this.camera_aspect_ratio = 1.0;
-
-    this.createCameraStream().then(
-      () => {},
-      error => {
-        console.error(error);
-      }
-    );
   }
 
   getVideoElement() {
