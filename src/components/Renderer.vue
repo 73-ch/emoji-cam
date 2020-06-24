@@ -44,6 +44,7 @@ export default {
 
       window.addEventListener("resize", this.resized.bind(this));
 
+      this.$root.$emit("renderer-loaded", true);
       this.$emit("loaded");
     });
 
@@ -74,6 +75,12 @@ export default {
 
         file_reader.readAsDataURL(s);
       } else if (e.target.id === "background-checkbox") {
+        this.background_enable = s.showbackground;
+      } else if (e.target === "all") {
+        this.videoElement.style.visibility = s.showvideo ? "visible" : "hidden";
+        this.videoElement.style.visibility = s.showvideo ? "visible" : "hidden";
+        this.camera.setDeviceId(s.camera_device_id);
+        this.controller.emoji_renderer.size_adjust = s.emoji_size;
         this.background_enable = s.showbackground;
       }
     });

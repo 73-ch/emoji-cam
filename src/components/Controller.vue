@@ -59,6 +59,28 @@ export default {
     this.$root.$on("background-img-loaded", t => {
       this.$set(this.struct, "showbackground", t);
     });
+
+    if (localStorage.struct) {
+      let obj = JSON.parse(localStorage.struct);
+      for (let k of Object.keys(obj)) {
+        if (k === "camera_device_id") {
+          for (let c of this.$refs.device_select.childNodes) {
+            if (c.value === obj[k]) this.struct.camera_device_id = obj[k];
+          }
+        } else {
+          this.$set(this.struct, k, obj[k]);
+        }
+      }
+      this.$root.$on("renderer-loaded", () => {
+        console.log("update");
+        this.update({ target: "all" });
+        this.backgroundColorChanged();
+      });
+    }
+
+    window.addEventListener("beforeunload", () => {
+      localStorage.setItem("struct", JSON.stringify(this.struct));
+    });
   },
   methods: {
     initDeviceSelect() {
