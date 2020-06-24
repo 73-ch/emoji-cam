@@ -22,6 +22,8 @@ export default class Camera {
   }
 
   async setDeviceId(device_id) {
+    if (this.constraints.video.deviceId && this.constraints.video.deviceId === device_id) return;
+
     this.constraints.video = {};
     this.constraints.video.deviceId = device_id;
     await this.createCameraStream();
