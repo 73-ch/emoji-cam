@@ -18,7 +18,16 @@ export default {
     };
   },
   mounted() {
-    this.camera = new Camera();
+    const constraints = {
+      audio: false,
+      video: true
+    };
+
+    if (localStorage.struct) {
+      constraints.video = { deviceId: JSON.parse(localStorage.struct).camera_device_id };
+    }
+
+    this.camera = new Camera(constraints);
 
     this.controller = new RenderingController(this.$refs.canvas, this.camera);
 
