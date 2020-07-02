@@ -23,7 +23,7 @@ For detailed instructions on how to input the camera, see [How To Setup VirtualC
 
 ## Examples
 <img src="./examples/example.gif" width="680" alt="example animation">
-<img src="./examples/example1.png" width="340" alt="example image1"><img src="./examples/example4.png" width="340" alt="example image2">
+<img src="./examples/example5.png" width="680" alt="example image">
 
 ### Movie
 https://youtu.be/N53lCmZnxRM
