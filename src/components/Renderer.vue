@@ -93,6 +93,9 @@ export default {
       }
     });
   },
+  beforeDestroy() {
+    this.controller.stop();
+  },
   methods: {
     resized() {
       if (window.innerWidth > window.innerHeight * this.camera.camera_aspect_ratio) {
