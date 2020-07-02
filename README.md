@@ -21,8 +21,6 @@ In your browser (Chrome, Firefox recommended) [https://73-ch. github.io/emoji-ca
 You can use it for video conferencing by sharing the screen of the browser. To use the output as camera input for video calling apps like Zoom, use OBS Virtual Use Input, NDI Tools, CamTwist or other applications.
 For detailed instructions on how to input the camera, see [How To Setup VirtualCam](https://github.com/73-ch/emoji-cam/wiki/How-To-Setup-VirtualCam).
 
-Translated with www.DeepL.com/Translator (free version)
-
 ## Examples
 ![image](examples/example1.png)
 ![image](examples/example4.png)
