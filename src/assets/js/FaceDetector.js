@@ -3,8 +3,6 @@ import Camera from "./Camera";
 
 const MODEL_URL = `./models`;
 
-const LANDMARKS_NUM = 68;
-
 export default class FaceDetector {
   constructor(camera = new Camera()) {
     this.camera = camera;
@@ -37,7 +35,7 @@ export default class FaceDetector {
 
     let result = await faceapi
       .detectAllFaces(this.camera.getVideoElement(), new faceapi.TinyFaceDetectorOptions())
-      .withFaceLandmarks()
+      // .withFaceLandmarks()
       .withFaceExpressions();
 
     try {
