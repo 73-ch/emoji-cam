@@ -22,8 +22,9 @@ You can use it for video conferencing by sharing the screen of the browser. To u
 For detailed instructions on how to input the camera, see [How To Setup VirtualCam](https://github.com/73-ch/emoji-cam/wiki/How-To-Setup-VirtualCam).
 
 ## Examples
-![image](examples/example1.png)
-![image](examples/example4.png)
+<img src="./examples/example.gif" width="680" alt="example animation">
+<img src="./examples/example1.png" width="340" alt="example image1">
+<img src="./examples/example4.png" width="340" alt="example image2">
 
 ### Movie
 https://youtu.be/N53lCmZnxRM
