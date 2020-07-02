@@ -12,6 +12,17 @@ This tool simplifies communication in video conferencing by displaying pictogram
 
 このツールはビデオ会議でカメラ画像を長時間表示し続ける代わりに，表情分析を行なった結果の絵文字を表示することで，コミュニケーションの簡易化を行うツールです．
 
+## How to use
+ブラウザ(Chrome, Firefoxを推奨)で [https://73-ch.github.io/emoji-cam/dist/#/](https://73-ch.github.io/emoji-cam/dist/#/) を開き，カメラ入力を選択してください．
+ブラウザの画面を画面共有することでテレビ会議に使用することができます．出力をZoomなどのビデオ通話アプリのカメラ入力に使用するには，OBS Virtual InputやNDI Tools, CamTwistなどのアプリケーションを使用ください．
+カメラ入力の詳しい方法については [How To Setup VirtualCam](https://github.com/73-ch/emoji-cam/wiki/How-To-Setup-VirtualCam) を見てください．
+
+In your browser (Chrome, Firefox recommended) [https://73-ch. github.io/emoji-cam/dist/#/](https://73-ch.github.io/emoji-cam/dist/#/) and select the camera input.
+You can use it for video conferencing by sharing the screen of the browser. To use the output as camera input for video calling apps like Zoom, use OBS Virtual Use Input, NDI Tools, CamTwist or other applications.
+For detailed instructions on how to input the camera, see [How To Setup VirtualCam](https://github.com/73-ch/emoji-cam/wiki/How-To-Setup-VirtualCam).
+
+Translated with www.DeepL.com/Translator (free version)
+
 ## Examples
 ![image](examples/example1.png)
 ![image](examples/example4.png)
