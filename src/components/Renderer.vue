@@ -76,12 +76,17 @@ export default {
         file_reader.readAsDataURL(s);
       } else if (e.target.id === "background-checkbox") {
         this.background_enable = s.showbackground;
+      } else if (Object.keys(this.controller.emoji_renderer.emoji_lookup).some(emo => emo === e.target.id)) {
+        this.controller.emoji_renderer.emoji_lookup[e.target.id] = e.target.value;
       } else if (e.target === "all") {
         this.videoElement.style.visibility = s.showvideo ? "visible" : "hidden";
         this.videoElement.style.visibility = s.showvideo ? "visible" : "hidden";
         this.camera.setDeviceId(s.camera_device_id);
         this.controller.emoji_renderer.size_adjust = s.emoji_size;
         this.background_enable = s.showbackground;
+        for (let emo of Object.keys(s.emoji_lookup)) {
+          this.controller.emoji_renderer.emoji_lookup[emo] = s.emoji_lookup[emo];
+        }
       }
     });
 

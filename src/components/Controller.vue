@@ -1,37 +1,91 @@
 <template>
-  <div class="container">
-    <div>
-      <label for="video-checkbox">video: </label>
-      <input id="video-checkbox" type="checkbox" v-model="struct.showvideo" @change="update" />
+  <div>
+    <div class="container">
+      <div>
+        <label for="video-checkbox">video: </label>
+        <input id="video-checkbox" type="checkbox" v-model="struct.showvideo" @change="update" />
+      </div>
+      <div>
+        <label for="canvas-checkbox">canvas:</label>
+        <input id="canvas-checkbox" type="checkbox" v-model="struct.showcanvas" @change="update" />
+      </div>
+      <div>
+        <label for="background-checkbox">background image:</label>
+        <input id="background-checkbox" type="checkbox" v-model="struct.showbackground" @change="update" />
+      </div>
+      <div>
+        <label for="device-select">camera device:</label>
+        <select id="device-select" v-model="struct.camera_device_id" @change="update" ref="device_select"></select>
+      </div>
+      <div>
+        <label for="emoji-size">emoji size:</label>
+        <input
+          id="emoji-size"
+          type="range"
+          min="0.1"
+          max="4.0"
+          step="0.1"
+          v-model="struct.emoji_size"
+          @input="update"
+        />
+      </div>
+      <div>
+        <label for="background-color">background color :</label>
+        <input id="background-color" type="color" v-model="struct.background_color" @input="backgroundColorChanged" />
+      </div>
+      <div>
+        <label for="background-img">background image: </label>
+        <input id="background-img" type="file" accept="image/png,image/gif,image/jpeg" @change="imgFileSelected" />
+      </div>
+      <div>
+        <a href="https://github.com/73-ch/emoji-cam#how-to-use">
+          <button id="help">help</button>
+        </a>
+      </div>
     </div>
-    <div>
-      <label for="canvas-checkbox">canvas:</label>
-      <input id="canvas-checkbox" type="checkbox" v-model="struct.showcanvas" @change="update" />
-    </div>
-    <div>
-      <label for="background-checkbox">background image:</label>
-      <input id="background-checkbox" type="checkbox" v-model="struct.showbackground" @change="update" />
-    </div>
-    <div>
-      <label for="device-select">camera device:</label>
-      <select id="device-select" v-model="struct.camera_device_id" @change="update" ref="device_select"></select>
-    </div>
-    <div>
-      <label for="emoji-size">emoji size:</label>
-      <input id="emoji-size" type="range" min="0.1" max="4.0" step="0.1" v-model="struct.emoji_size" @input="update" />
-    </div>
-    <div>
-      <label for="background-color">background color :</label>
-      <input id="background-color" type="color" v-model="struct.background_color" @input="backgroundColorChanged" />
-    </div>
-    <div>
-      <label for="background-img">background image: </label>
-      <input id="background-img" type="file" accept="image/png,image/gif,image/jpeg" @change="imgFileSelected" />
-    </div>
-    <div>
-      <a href="https://github.com/73-ch/emoji-cam#how-to-use">
-        <button id="help">help</button>
-      </a>
+    <div class="container">
+      <div>
+        <label for="neutral">neutral: </label>
+        <input type="text" id="neutral" ref="neutral" size="2" @input="update" v-model="struct.emoji_lookup.neutral" />
+      </div>
+      <div>
+        <label for="angry">angry: </label>
+        <input type="text" id="angry" ref="angry" size="2" @input="update" v-model="struct.emoji_lookup.angry" />
+      </div>
+      <div>
+        <label for="disgusted">disgusted: </label>
+        <input
+          type="text"
+          id="disgusted"
+          ref="disgusted"
+          size="2"
+          @input="update"
+          v-model="struct.emoji_lookup.disgusted"
+        />
+      </div>
+      <div>
+        <label for="feaful">feaful: </label>
+        <input type="text" id="feaful" ref="feaful" size="2" @input="update" v-model="struct.emoji_lookup.fearful" />
+      </div>
+      <div>
+        <label for="happy">happy: </label>
+        <input type="text" id="happy" ref="happy" size="2" @input="update" v-model="struct.emoji_lookup.happy" />
+      </div>
+      <div>
+        <label for="sad">sad: </label>
+        <input type="text" id="sad" ref="sad" size="2" @input="update" v-model="struct.emoji_lookup.sad" />
+      </div>
+      <div>
+        <label for="surprised">surprised: </label>
+        <input
+          type="text"
+          id="surprised"
+          ref="surprised"
+          size="2"
+          @input="update"
+          v-model="struct.emoji_lookup.surprised"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -47,7 +101,16 @@ export default {
         showbackground: false,
         camera_device_id: "",
         emoji_size: "1.0",
-        background_color: "#ffffff"
+        background_color: "#ffffff",
+        emoji_lookup: {
+          angry: "😡",
+          disgusted: "😟",
+          fearful: "😨",
+          happy: "🤩",
+          neutral: "🙂",
+          sad: "🥺",
+          surprised: "😳"
+        }
       }
     };
   },
@@ -72,18 +135,23 @@ export default {
           for (let c of this.$refs.device_select.childNodes) {
             if (c.value === obj[k]) this.struct.camera_device_id = obj[k];
           }
+        } else if (k === "emoji_lookup") {
+          for (let emo of Object.keys(obj[k])) {
+            console.log(this.struct.emoji_lookup, emo, obj[k][emo]);
+            this.$set(this.struct.emoji_lookup, emo, obj[k][emo]);
+          }
         } else {
           this.$set(this.struct, k, obj[k]);
         }
       }
       this.$root.$on("renderer-loaded", () => {
-        console.log("update");
         this.update({ target: "all" });
         this.backgroundColorChanged();
       });
     }
 
     window.addEventListener("beforeunload", () => {
+      console.log(JSON.stringify(this.struct));
       localStorage.setItem("struct", JSON.stringify(this.struct));
     });
   },
