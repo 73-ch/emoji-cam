@@ -70,12 +70,9 @@ export default class EmojiRenderer extends RenderingObject {
 
       const scaled_height = s.height * this.size_adjust;
       this.ctl.ctx.font = `${Math.floor(scaled_height)}px serif`;
+      this.ctl.ctx.textAlign = "center";
 
-      this.ctl.ctx.fillText(
-        this.emoji_lookup[this._emotions[i]],
-        s.position[0] - scaled_height * 0.5,
-        s.position[1] + scaled_height * 0.5
-      );
+      this.ctl.ctx.fillText(this.emoji_lookup[this._emotions[i]], s.position[0], s.position[1] + scaled_height * 0.5);
 
       this.statics[this._emotions[i]] += 1.0 / length;
 
