@@ -137,7 +137,6 @@ export default {
           }
         } else if (k === "emoji_lookup") {
           for (let emo of Object.keys(obj[k])) {
-            console.log(this.struct.emoji_lookup, emo, obj[k][emo]);
             this.$set(this.struct.emoji_lookup, emo, obj[k][emo]);
           }
         } else {
@@ -151,7 +150,6 @@ export default {
     }
 
     window.addEventListener("beforeunload", () => {
-      console.log(JSON.stringify(this.struct));
       localStorage.setItem("struct", JSON.stringify(this.struct));
     });
   },
