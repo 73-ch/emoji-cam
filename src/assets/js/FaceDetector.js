@@ -1,5 +1,6 @@
 import * as faceapi from "face-api.js";
 import Camera from "./Camera";
+import Square from "@/assets/js/Square";
 
 const MODEL_URL = `./models`;
 
@@ -52,10 +53,7 @@ export default class FaceDetector {
       for (let r of this.results) {
         const box = r.detection.box;
         this.expressions.push(r.expressions);
-        this.squares.push({
-          position: [box.x + box.width * 0.5, box.y + box.height * 0.2],
-          height: box.height
-        });
+        this.squares.push(new Square([box.x + box.width * 0.5, box.y + box.height * 0.2], box.height));
       }
 
       this.updated = true;

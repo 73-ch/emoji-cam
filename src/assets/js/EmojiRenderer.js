@@ -9,6 +9,7 @@ export default class EmojiRenderer extends RenderingObject {
 
     this._emotions = [];
 
+    this.before_square = [];
     this.squares = []; // square: {height: font_size, position:[x,y]}
 
     this.size_adjust = 1.0;
@@ -63,8 +64,13 @@ export default class EmojiRenderer extends RenderingObject {
     const length = this.squares.length;
 
     this.squares.forEach((s, i) => {
+      if (this.squares.length === this.before_square.length && this.before_square[i].distance(s) < 100) {
+        s.interpolate(this.before_square[i], 0.1);
+      }
+
       const scaled_height = s.height * this.size_adjust;
       this.ctl.ctx.font = `${Math.floor(scaled_height)}px serif`;
+
       this.ctl.ctx.fillText(
         this.emoji_lookup[this._emotions[i]],
         s.position[0] - scaled_height * 0.5,
@@ -78,5 +84,7 @@ export default class EmojiRenderer extends RenderingObject {
       // this.ctl.ctx.fillText(this.emoji_lookup[this._emotions[i]], 0, 0);
       // this.ctl.ctx.resetTransform();
     });
+
+    this.before_square = this.squares;
   }
 }
