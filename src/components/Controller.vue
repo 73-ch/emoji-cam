@@ -14,6 +14,10 @@
         <input id="background-checkbox" type="checkbox" v-model="struct.showbackground" @change="update" />
       </div>
       <div>
+        <label for="video-blur-checkbox">blur video:</label>
+        <input id="video-blur-checkbox" type="checkbox" v-model="struct.blurvideo" @change="update" />
+      </div>
+      <div>
         <label for="device-select">camera device:</label>
         <select id="device-select" v-model="struct.camera_device_id" @change="update" ref="device_select"></select>
       </div>
@@ -98,6 +102,7 @@ export default {
       struct: {
         showvideo: true,
         showcanvas: true,
+        blurvideo: false,
         showbackground: false,
         camera_device_id: "",
         emoji_size: "1.0",
