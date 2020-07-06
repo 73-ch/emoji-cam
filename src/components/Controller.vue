@@ -68,8 +68,8 @@
         />
       </div>
       <div>
-        <label for="feaful">feaful: </label>
-        <input type="text" id="feaful" ref="feaful" size="2" @input="update" v-model="struct.emoji_lookup.fearful" />
+        <label for="fearful">fearful: </label>
+        <input type="text" id="fearful" ref="fearful" size="2" @input="update" v-model="struct.emoji_lookup.fearful" />
       </div>
       <div>
         <label for="happy">happy: </label>
