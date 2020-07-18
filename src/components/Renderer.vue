@@ -52,7 +52,7 @@ export default {
       if (e.target.id === "video-checkbox") {
         this.videoElement.style.visibility = s.showvideo ? "visible" : "hidden";
       } else if (e.target.id === "video-blur-checkbox") {
-        this.videoElement.style.filter = s.blurvideo ? "blur(30px)" : "none";
+        this.videoElement.style.filter = s.blurvideo ? "blur(10px)" : "none";
       } else if (e.target.id === "canvas-checkbox") {
         this.$refs.canvas.style.visibility = s.showcanvas ? "visible" : "hidden";
       } else if (e.target.id === "device-select") {
@@ -83,7 +83,7 @@ export default {
       } else if (e.target === "all") {
         this.videoElement.style.visibility = s.showvideo ? "visible" : "hidden";
         this.videoElement.style.visibility = s.showvideo ? "visible" : "hidden";
-        this.videoElement.style.filter = s.blurvideo ? "blur(30px)" : "none";
+        this.videoElement.style.filter = s.blurvideo ? "blur(10px)" : "none";
         this.camera.setDeviceId(s.camera_device_id);
         this.controller.emoji_renderer.size_adjust = s.emoji_size;
         this.background_enable = s.showbackground;
