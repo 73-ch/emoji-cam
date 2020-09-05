@@ -93,6 +93,14 @@ export default {
       }
     });
 
+    this.$root.$on("requestStatics", () => {
+      const statics = this.controller.emoji_renderer.getStatics();
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(JSON.stringify(statics));
+      }
+      console.log(statics);
+    });
+
     window.addEventListener("beforeunload", () => {
       const statics = this.controller.emoji_renderer.getStatics();
 

@@ -46,6 +46,9 @@
           <button id="help">help</button>
         </a>
       </div>
+      <div>
+        <button @click="getStatics">statics</button>
+      </div>
     </div>
     <div class="container">
       <div>
@@ -186,6 +189,9 @@ export default {
       if (!e.target.files[0]) return;
 
       this.$root.$emit("controller_update", e, e.target.files[0]);
+    },
+    getStatics() {
+      this.$root.$emit("requestStatics");
     }
   }
 };
