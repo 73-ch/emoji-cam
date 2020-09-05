@@ -25,6 +25,10 @@ export default class EmojiRenderer extends RenderingObject {
       surprised: "😳"
     };
 
+    this.resetStatics();
+  }
+
+  resetStatics() {
     this.statics = {
       angry: 0,
       disgusted: 0,
@@ -38,11 +42,16 @@ export default class EmojiRenderer extends RenderingObject {
 
   getStatics() {
     const sum = Object.values(this.statics).reduce((a, s) => a + s);
+
+    const result = {};
+
     Object.keys(this.statics).forEach(k => {
-      this.statics[k] /= sum;
+      result[k] = this.statics[k] / sum;
     });
 
-    return this.statics;
+    this.resetStatics();
+
+    return result;
   }
 
   set emotions(emotions) {
@@ -73,8 +82,7 @@ export default class EmojiRenderer extends RenderingObject {
       this.ctl.ctx.textAlign = "center";
 
       this.ctl.ctx.fillText(this.emoji_lookup[this._emotions[i]], s.position[0], s.position[1] + scaled_height * 0.5);
-
-      this.statics[this._emotions[i]] += 1.0 / length;
+      this.statics[this._emotions[i]] += 1.0 / length || 0;
 
       // this.ctl.ctx.translate(s.position[0] - scaled_height * 0.5, s.position[1] + scaled_height * 0.5);
       // this.ctl.ctx.scale(scaled_height / 500, scaled_height / 500);
