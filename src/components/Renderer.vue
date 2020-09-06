@@ -60,8 +60,7 @@ export default {
       } else if (e.target.id === "emoji-size") {
         this.controller.emoji_renderer.size_adjust = s.emoji_size;
       } else if (e.target.id === "manual-mode") {
-        // write manual mode
-        console.log("manual-mode changed");
+        this.controller.emotion_controller.manual_mode = s.manual;
       } else if (e.target.id === "background-img") {
         const file_reader = new FileReader();
         file_reader.addEventListener("load", () => {
@@ -89,6 +88,7 @@ export default {
         this.videoElement.style.filter = s.blurvideo ? "blur(10px)" : "none";
         this.camera.setDeviceId(s.camera_device_id);
         this.controller.emoji_renderer.size_adjust = s.emoji_size;
+        this.controller.emotion_controller.manual_mode = s.manual;
         this.background_enable = s.showbackground;
         for (let emo of Object.keys(s.emoji_lookup)) {
           this.controller.emoji_renderer.emoji_lookup[emo] = s.emoji_lookup[emo];
@@ -117,6 +117,14 @@ export default {
 
       for (let e of Object.keys(statics)) {
         this.$ga.event("Emotion", "rate", e, Math.floor(statics[e] * 100));
+      }
+    });
+
+    window.addEventListener("keydown", e => {
+      const i = ["1", "2", "3", "4", "5", "6", "7"].indexOf(e.key);
+
+      if (i > -1) {
+        this.controller.emotion_controller.current_emotion = this.controller.emotion_controller.EMOTION_LIST[i];
       }
     });
   },

@@ -35,7 +35,7 @@
       </div>
       <div>
         <label for="manual-mode">manual:</label>
-        <input id="manual-mode" type="checkbox" v-model="struct.manual" @input="update" />
+        <input id="manual-mode" type="checkbox" v-model="struct.manual" @change="update" />
       </div>
       <div>
         <label for="background-color">background color :</label>
