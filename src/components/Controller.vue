@@ -22,6 +22,11 @@
         <button @click="exportLog">exportLog</button>
       </div>
       <div>
+        <a href="https://github.com/73-ch/emoji-cam#how-to-use">
+          <button id="help">help</button>
+        </a>
+      </div>
+      <div>
         <label for="device-select">camera device:</label>
         <select id="device-select" v-model="struct.camera_device_id" @change="update" ref="device_select"></select>
       </div>
@@ -48,11 +53,6 @@
       <div>
         <label for="background-img">background image: </label>
         <input id="background-img" type="file" accept="image/png,image/gif,image/jpeg" @change="imgFileSelected" />
-      </div>
-      <div>
-        <a href="https://github.com/73-ch/emoji-cam#how-to-use">
-          <button id="help">help</button>
-        </a>
       </div>
     </div>
     <div class="container">
