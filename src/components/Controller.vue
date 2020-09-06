@@ -3,19 +3,25 @@
     <div class="container">
       <div>
         <label for="video-checkbox">video: </label>
-        <input id="video-checkbox" type="checkbox" v-model="struct.showvideo" @change="update" />
+        <input id="video-checkbox" type="checkbox" v-model="struct.showvideo" @change="update" ref="video_toggle" />
       </div>
       <div>
         <label for="canvas-checkbox">canvas:</label>
-        <input id="canvas-checkbox" type="checkbox" v-model="struct.showcanvas" @change="update" />
+        <input id="canvas-checkbox" type="checkbox" v-model="struct.showcanvas" @change="update" ref="canvas_toggle" />
       </div>
       <div>
         <label for="background-checkbox">background image:</label>
-        <input id="background-checkbox" type="checkbox" v-model="struct.showbackground" @change="update" />
+        <input
+          id="background-checkbox"
+          type="checkbox"
+          v-model="struct.showbackground"
+          @change="update"
+          ref="image_toggle"
+        />
       </div>
       <div>
         <label for="video-blur-checkbox">blur video:</label>
-        <input id="video-blur-checkbox" type="checkbox" v-model="struct.blurvideo" @change="update" />
+        <input id="video-blur-checkbox" type="checkbox" v-model="struct.blurvideo" @change="update" ref="blur_toggle" />
       </div>
       <div>
         <button @click="getStatics">statics</button>
@@ -44,7 +50,7 @@
       </div>
       <div>
         <label for="manual-mode">manual:</label>
-        <input id="manual-mode" type="checkbox" v-model="struct.manual" @change="update" ref="manual" />
+        <input id="manual-mode" type="checkbox" v-model="struct.manual" @change="update" ref="manual_toggle" />
       </div>
       <div>
         <label for="background-color">background color :</label>
@@ -169,7 +175,11 @@ export default {
     });
 
     window.addEventListener("keydown", e => {
-      if (e.key === "m") this.$refs.manual.click();
+      if (e.key === "m") this.$refs.manual_toggle.click();
+      if (e.key === "v") this.$refs.video_toggle.click();
+      if (e.key === "c") this.$refs.canvas_toggle.click();
+      if (e.key === "i") this.$refs.image_toggle.click();
+      if (e.key === "b") this.$refs.blur_toggle.click();
     });
 
     this.addLog();
