@@ -18,6 +18,10 @@
         <input id="video-blur-checkbox" type="checkbox" v-model="struct.blurvideo" @change="update" />
       </div>
       <div>
+        <button @click="getStatics">statics</button>
+        <button @click="exportLog">exportLog</button>
+      </div>
+      <div>
         <label for="device-select">camera device:</label>
         <select id="device-select" v-model="struct.camera_device_id" @change="update" ref="device_select"></select>
       </div>
@@ -49,9 +53,6 @@
         <a href="https://github.com/73-ch/emoji-cam#how-to-use">
           <button id="help">help</button>
         </a>
-      </div>
-      <div>
-        <button @click="getStatics">statics</button>
       </div>
     </div>
     <div class="container">
@@ -124,7 +125,8 @@ export default {
           sad: "🥺",
           surprised: "😳"
         }
-      }
+      },
+      log: { struct: [] }
     };
   },
   mounted() {
@@ -165,6 +167,8 @@ export default {
     window.addEventListener("beforeunload", () => {
       localStorage.setItem("struct", JSON.stringify(this.struct));
     });
+
+    this.addLog();
   },
   methods: {
     initDeviceSelect() {
@@ -185,6 +189,7 @@ export default {
       );
     },
     update(e) {
+      this.addLog();
       this.$root.$emit("controller_update", e, this.struct);
     },
     backgroundColorChanged() {
@@ -197,6 +202,24 @@ export default {
     },
     getStatics() {
       this.$root.$emit("requestStatics");
+    },
+    addLog() {
+      this.log.struct.push({
+        timestamp: Date.now(),
+        struct: this.struct
+      });
+    },
+    exportLog() {
+      const blob = new Blob([JSON.stringify(this.log, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+
+      const dummyATag = document.createElement("a");
+      dummyATag.href = url;
+      dummyATag.target = "_blank";
+      dummyATag.download = "log.json";
+      dummyATag.click();
+
+      // window.open(url, "_blank");
     }
   }
 };
