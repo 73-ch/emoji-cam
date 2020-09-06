@@ -63,6 +63,8 @@ export default class EmojiRenderer extends RenderingObject {
         result += this.statics[k] + "\t";
       });
 
+    result = result.slice(0, -1);
+
     this.resetStatics();
 
     return result;
