@@ -94,15 +94,23 @@ export default {
     });
 
     this.$root.$on("requestStatics", () => {
-      const statics = this.controller.emoji_renderer.getStatics();
-      if (navigator.clipboard) {
-        navigator.clipboard.writeText(JSON.stringify(statics));
-      }
+      const statics = this.controller.emoji_renderer.getStaticsText();
+
+      const dummyTextarea = document.createElement("textarea");
+
+      document.body.appendChild(dummyTextarea);
+
+      dummyTextarea.textContent = statics;
+      dummyTextarea.select();
+      document.execCommand("copy");
+
+      document.body.removeChild(dummyTextarea);
+
       console.log(statics);
     });
 
     window.addEventListener("beforeunload", () => {
-      const statics = this.controller.emoji_renderer.getStatics();
+      const statics = this.controller.emoji_renderer.getStaticsJson();
 
       for (let e of Object.keys(statics)) {
         this.$ga.event("Emotion", "rate", e, Math.floor(statics[e] * 100));

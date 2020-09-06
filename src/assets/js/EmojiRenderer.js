@@ -40,7 +40,7 @@ export default class EmojiRenderer extends RenderingObject {
     };
   }
 
-  getStatics() {
+  getStaticsJson() {
     const sum = Object.values(this.statics).reduce((a, s) => a + s);
 
     const result = {};
@@ -48,6 +48,20 @@ export default class EmojiRenderer extends RenderingObject {
     Object.keys(this.statics).forEach(k => {
       result[k] = this.statics[k] / sum;
     });
+
+    this.resetStatics();
+
+    return result;
+  }
+
+  getStaticsText() {
+    let result = "";
+
+    Object.keys(this.statics)
+      .sort()
+      .forEach(k => {
+        result += this.statics[k] + "\t";
+      });
 
     this.resetStatics();
 
