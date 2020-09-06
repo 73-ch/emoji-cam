@@ -59,6 +59,9 @@ export default {
         this.camera.setDeviceId(s.camera_device_id);
       } else if (e.target.id === "emoji-size") {
         this.controller.emoji_renderer.size_adjust = s.emoji_size;
+      } else if (e.target.id === "manual-mode") {
+        // write manual mode
+        console.log("manual-mode changed");
       } else if (e.target.id === "background-img") {
         const file_reader = new FileReader();
         file_reader.addEventListener("load", () => {

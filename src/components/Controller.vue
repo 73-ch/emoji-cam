@@ -34,6 +34,10 @@
         />
       </div>
       <div>
+        <label for="manual-mode">manual:</label>
+        <input id="manual-mode" type="checkbox" v-model="struct.manual" @input="update" />
+      </div>
+      <div>
         <label for="background-color">background color :</label>
         <input id="background-color" type="color" v-model="struct.background_color" @input="backgroundColorChanged" />
       </div>
@@ -109,6 +113,7 @@ export default {
         showbackground: false,
         camera_device_id: "",
         emoji_size: "1.0",
+        manual: false,
         background_color: "#ffffff",
         emoji_lookup: {
           angry: "😡",
