@@ -44,7 +44,7 @@
       </div>
       <div>
         <label for="manual-mode">manual:</label>
-        <input id="manual-mode" type="checkbox" v-model="struct.manual" @change="update" />
+        <input id="manual-mode" type="checkbox" v-model="struct.manual" @change="update" ref="manual" />
       </div>
       <div>
         <label for="background-color">background color :</label>
@@ -166,6 +166,10 @@ export default {
 
     window.addEventListener("beforeunload", () => {
       localStorage.setItem("struct", JSON.stringify(this.struct));
+    });
+
+    window.addEventListener("keydown", e => {
+      if (e.key === "m") this.$refs.manual.click();
     });
 
     this.addLog();
