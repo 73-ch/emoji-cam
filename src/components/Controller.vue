@@ -203,7 +203,7 @@ export default {
       );
     },
     update(e) {
-      this.addLog();
+      this.addLog(e);
       this.$root.$emit("controller_update", e, this.struct);
     },
     backgroundColorChanged() {
@@ -217,10 +217,37 @@ export default {
     getStatics() {
       this.$root.$emit("requestStatics");
     },
-    addLog() {
+    addLog(e) {
+      const changed = {};
+      if (!e) {
+        return;
+      } else if (e.target.id === "video-checkbox") {
+        changed["showvideo"] = this.struct.showvideo;
+      } else if (e.target.id === "video-blur-checkbox") {
+        changed["blurvideo"] = this.struct.blurvideo;
+      } else if (e.target.id === "canvas-checkbox") {
+        changed["showcanvas"] = this.struct.showcanvas;
+      } else if (e.target.id === "device-select") {
+        changed["camera_device_id"] = this.struct.camera_device_id;
+      } else if (e.target.id === "emoji-size") {
+        changed["emoji_size"] = this.struct.emoji_size;
+      } else if (e.target.id === "manual-mode") {
+        changed["manual"] = this.struct.manual;
+      } else if (e.target.id === "background-img") {
+        changed["background_image_changed"] = true;
+      } else if (e.target.id === "background-checkbox") {
+        changed["background_enable"] = this.struct.showbackground;
+      } else if (
+        ["neutral", "angry", "disgusted", "fearful", "happy", "sad", "surprised"].some(emo => emo === e.target.id)
+      ) {
+        changed[e.target.id] = e.target.value;
+      } else if (e.target === "all") {
+        changed["all"] = this.struct;
+      }
+
       this.log.struct.push({
         timestamp: Date.now(),
-        struct: this.struct
+        data: changed
       });
     },
     exportLog() {
