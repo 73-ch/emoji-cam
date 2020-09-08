@@ -182,7 +182,10 @@ export default {
       if (e.key === "b") this.$refs.blur_toggle.click();
     });
 
-    this.log.initial_struct = this.copyStruct;
+    this.log.start = {
+      struct: this.copyStruct,
+      timestamp: Date.now()
+    };
 
     this.addLog();
   },
@@ -251,6 +254,8 @@ export default {
       });
     },
     exportLog() {
+      this.log.end = { timestamp: Date.now() };
+
       const blob = new Blob([JSON.stringify(this.log, null, 2)], { type: "application/json" });
       const url = URL.createObjectURL(blob);
 
