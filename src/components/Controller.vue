@@ -182,6 +182,8 @@ export default {
       if (e.key === "b") this.$refs.blur_toggle.click();
     });
 
+    this.log.initial_struct = this.copyStruct();
+
     this.addLog();
   },
   methods: {
@@ -219,7 +221,7 @@ export default {
     },
     addLog(e) {
       const changed = {};
-      if (!e) {
+      if (!e || e.target === "all") {
         return;
       } else if (e.target.id === "video-checkbox") {
         changed["showvideo"] = this.struct.showvideo;
@@ -236,13 +238,11 @@ export default {
       } else if (e.target.id === "background-img") {
         changed["background_image_changed"] = true;
       } else if (e.target.id === "background-checkbox") {
-        changed["background_enable"] = this.struct.showbackground;
+        changed["showbackground"] = this.struct.showbackground;
       } else if (
         ["neutral", "angry", "disgusted", "fearful", "happy", "sad", "surprised"].some(emo => emo === e.target.id)
       ) {
         changed[e.target.id] = e.target.value;
-      } else if (e.target === "all") {
-        changed["all"] = this.struct;
       }
 
       this.log.struct.push({
@@ -261,6 +261,27 @@ export default {
       dummyATag.click();
 
       // window.open(url, "_blank");
+    }
+  },
+  computed: {
+    copyStruct() {
+      return {
+        showvideo: this.struct.showvideo,
+        showcanvas: this.struct.showcanvas,
+        blurvideo: this.struct.blurvideo,
+        showbackground: this.struct.showbackground,
+        camera_device_id: this.struct.camera_device_id,
+        emoji_size: this.struct.emoji_size,
+        manual: this.struct.manual,
+        background_color: this.struct.background_color,
+        angry: this.struct.emoji_lookup.angry,
+        disgusted: this.struct.emoji_lookup.disgusted,
+        fearful: this.struct.emoji_lookup.fearful,
+        happy: this.struct.emoji_lookup.happy,
+        neutral: this.struct.emoji_lookup.neutral,
+        sad: this.struct.emoji_lookup.sad,
+        surprised: this.struct.emoji_lookup.surprised
+      };
     }
   }
 };
