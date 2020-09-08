@@ -18,8 +18,8 @@ export default class FaceDetector {
   // eslint-disable-next-line class-methods-use-this
   async load() {
     await Promise.all([
-      faceapi.nets.ssdMobilenetv1.loadFromUri(MODEL_URL),
-      // faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
+      // faceapi.nets.ssdMobilenetv1.loadFromUri(MODEL_URL),
+      faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
       // faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL),
       // faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL),
       faceapi.nets.faceExpressionNet.loadFromUri(MODEL_URL)
@@ -33,13 +33,18 @@ export default class FaceDetector {
   }
 
   async update() {
+    const start = performance.now();
+
     if (!this.ready) throw new Error("model is not loaded.");
 
     let result = await faceapi
-      .detectAllFaces(this.camera.getVideoElement(), new faceapi.SsdMobilenetv1Options())
+      .detectSingleFace(this.camera.getVideoElement(), new faceapi.TinyFaceDetectorOptions())
+      // .detectSingleFace(this.camera.getVideoElement(), new faceapi.SsdMobilenetv1Options())
       // .withFaceLandmarks()
       .withFaceExpressions();
+    result = [result];
 
+    console.log(performance.now() - start);
     try {
       this.results = result.map(e => {
         return faceapi.resizeResults(e, {
