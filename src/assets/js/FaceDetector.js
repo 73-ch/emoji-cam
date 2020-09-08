@@ -33,7 +33,7 @@ export default class FaceDetector {
   }
 
   async update() {
-    const start = performance.now();
+    // const start = performance.now();
 
     if (!this.ready) throw new Error("model is not loaded.");
 
@@ -44,7 +44,7 @@ export default class FaceDetector {
       .withFaceExpressions();
     result = [result];
 
-    console.log(performance.now() - start);
+    // console.log(performance.now() - start);
     try {
       this.results = result.map(e => {
         return faceapi.resizeResults(e, {
