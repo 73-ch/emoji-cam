@@ -223,35 +223,45 @@ export default {
       this.$root.$emit("requestStatics");
     },
     addLog(e) {
-      const changed = {};
+      const log = {
+        timestamp: Date.now(),
+        key: null,
+        data: null
+      };
       if (!e || e.target === "all") {
         return;
       } else if (e.target.id === "video-checkbox") {
-        changed["showvideo"] = this.struct.showvideo;
+        log.key = "showvideo";
+        log.data = this.struct.showvideo;
       } else if (e.target.id === "video-blur-checkbox") {
-        changed["blurvideo"] = this.struct.blurvideo;
+        log.key = "blurvideo";
+        log.data = this.struct.blurvideo;
       } else if (e.target.id === "canvas-checkbox") {
-        changed["showcanvas"] = this.struct.showcanvas;
+        log.key = "showcanvas";
+        log.data = this.struct.showcanvas;
       } else if (e.target.id === "device-select") {
-        changed["camera_device_id"] = this.struct.camera_device_id;
+        log.key = "camera_device_id";
+        log.data = this.struct.camera_device_id;
       } else if (e.target.id === "emoji-size") {
-        changed["emoji_size"] = this.struct.emoji_size;
+        log.key = "emoji_size";
+        log.data = this.struct.emoji_size;
       } else if (e.target.id === "manual-mode") {
-        changed["manual"] = this.struct.manual;
+        log.key = "manual";
+        log.data = this.struct.manual;
       } else if (e.target.id === "background-img") {
-        changed["background_image_changed"] = true;
+        log.key = "background_image_changed";
+        log.data = true;
       } else if (e.target.id === "background-checkbox") {
-        changed["showbackground"] = this.struct.showbackground;
+        log.key = "showbackground";
+        log.data = this.struct.showbackground;
       } else if (
         ["neutral", "angry", "disgusted", "fearful", "happy", "sad", "surprised"].some(emo => emo === e.target.id)
       ) {
-        changed[e.target.id] = e.target.value;
+        log.key = e.target.id;
+        log.data = e.target.value;
       }
 
-      this.log.struct.push({
-        timestamp: Date.now(),
-        data: changed
-      });
+      this.log.struct.push(log);
     },
     exportLog() {
       this.log.end = { timestamp: Date.now() };
