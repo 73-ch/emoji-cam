@@ -182,7 +182,7 @@ export default {
       if (e.key === "b") this.$refs.blur_toggle.click();
     });
 
-    this.log.initial_struct = this.copyStruct();
+    this.log.initial_struct = this.copyStruct;
 
     this.addLog();
   },
